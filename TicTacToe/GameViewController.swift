@@ -9,16 +9,20 @@
 import UIKit
 
 class GameViewController: UIViewController, BoardViewControllerDelegate {
+
+    var game = Game()
     
     private enum GameState {
         case active(GameBoard.Mark) // Active player
         case cat
         case won(GameBoard.Mark) // Winning player
     }
-    
+
     @IBAction func restartGame(_ sender: Any) {
-        board = GameBoard()
-        gameState = .active(.x)
+        Game.restart(&game)
+        
+//        board = GameBoard()
+//        gameState = .active(.x)
     }
     
     // MARK: - BoardViewControllerDelegate
@@ -63,7 +67,7 @@ class GameViewController: UIViewController, BoardViewControllerDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EmbedBoard" {
-            boardViewController = segue.destination as! BoardViewController
+            boardViewController = segue.destination as? BoardViewController
         }
     }
     
